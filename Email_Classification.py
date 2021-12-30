@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer 
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 import numpy as np
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.svm import SVC
@@ -83,7 +83,7 @@ class Data_Preprocessing:
         
     def feature_creation(self, text_feat):
         print('Initialize the TfIdfVectorizer')
-        vectorizer= TfidfVectorizer('english')
+        vectorizer= TfidfVectorizer(stop_words='english')
         features = vectorizer.fit_transform(text_feat)
         print('***********Features created successfully*******************')
         print('--------------------------------')
@@ -135,7 +135,7 @@ class Parameter_tuning:
                 pred_scores_SVM.append((k, [i, accuracy_score(labels_test,pred)]))
         
         #converts key-value pair to dataframe    
-        df = pd.DataFrame.from_items(pred_scores_SVM,orient='index', columns=['Gamma','Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_SVM),orient='index', columns=['Gamma','Score'])
         df['Score'].plot(kind='line', figsize=(11,6), ylim=(0.8,1.0))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -151,7 +151,7 @@ class Parameter_tuning:
             pred = knc.predict(features_test)
             pred_scores_KNN.append((i, [accuracy_score(labels_test,pred)]))
             
-        df = pd.DataFrame.from_items(pred_scores_KNN,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_KNN),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -166,7 +166,7 @@ class Parameter_tuning:
             mnb.fit(features_train, labels_train)
             pred = mnb.predict(features_test)
             pred_scores_NB.append((i, [accuracy_score(labels_test,pred)]))
-        df = pd.DataFrame.from_items(pred_scores_NB,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_NB),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -181,7 +181,7 @@ class Parameter_tuning:
             dtc.fit(features_train, labels_train)
             pred = dtc.predict(features_test)
             pred_scores_DT.append((i, [accuracy_score(labels_test,pred)]))
-        df = pd.DataFrame.from_items(pred_scores_DT,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_DT),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -197,7 +197,7 @@ class Parameter_tuning:
             lrc.fit(features_train, labels_train)
             pred = lrc.predict(features_test)
             pred_scores_logistic.append((k, [accuracy_score(labels_test,pred)]))
-        df = pd.DataFrame.from_items(pred_scores_logistic,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_logistic),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -215,7 +215,7 @@ class Parameter_tuning:
             rfc.fit(features_train, labels_train)
             pred = rfc.predict(features_test)
             pred_scores_RF.append((i, [accuracy_score(labels_test,pred)]))
-        df = pd.DataFrame.from_items(pred_scores_RF,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_RF),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -231,7 +231,7 @@ class Parameter_tuning:
             abc.fit(features_train, labels_train)
             pred = abc.predict(features_test)
             pred_scores_abc.append((i, [accuracy_score(labels_test,pred)]))
-        df = pd.DataFrame.from_items(pred_scores_abc,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_abc),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -247,7 +247,7 @@ class Parameter_tuning:
             bc.fit(features_train, labels_train)
             pred = bc.predict(features_test)
             pred_scores_bc.append((i, [accuracy_score(labels_test,pred)]))
-        df = pd.DataFrame.from_items(pred_scores_bc,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_bc),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -263,7 +263,7 @@ class Parameter_tuning:
             etc.fit(features_train, labels_train)
             pred = etc.predict(features_test)
             pred_scores_etc.append((i, [accuracy_score(labels_test,pred)]))
-        df = pd.DataFrame.from_items(pred_scores_etc,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_etc),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -278,7 +278,7 @@ class Parameter_tuning:
             sgd_svm.fit(features_train, labels_train)
             pred = sgd_svm.predict(features_test)
             pred_scores_sgd_svm.append((i, [accuracy_score(labels_test,pred)]))
-        df = pd.DataFrame.from_items(pred_scores_sgd_svm,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_sgd_svm),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -293,7 +293,7 @@ class Parameter_tuning:
             sgd_LR.fit(features_train, labels_train)
             pred = sgd_LR.predict(features_test)
             pred_scores_sgd_LR.append((i, [accuracy_score(labels_test,pred)]))
-        df = pd.DataFrame.from_items(pred_scores_sgd_LR,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores_sgd_LR),orient='index', columns=['Score'])
         df.plot(figsize=(11,6))
         
         print(df[df['Score'] == df['Score'].max()])
@@ -377,7 +377,7 @@ class Email_Classifictaion:
             pred = self.predict_labels(v,features_test)
             pred_scores.append((k, [accuracy_score(labels_test,pred)]))
             
-        df = pd.DataFrame.from_items(pred_scores,orient='index', columns=['Score'])
+        df = pd.DataFrame.from_dict(dict(pred_scores),orient='index', columns=['Score'])
         print('Accuracy Scores of classifiers')
         print(df)
         print('\n')
@@ -421,7 +421,7 @@ class Email_Classifictaion:
         pred_SGD=[]
         pred_SGD.append((k1,[accuracy_score(labels_test,pred1)]))
         pred_SGD.append((k2,[accuracy_score(labels_test,pred2)]))
-        df2 = pd.DataFrame.from_items(pred_SGD,orient='index', columns=['Score'])
+        df2 = pd.DataFrame.from_dict(dict(pred_SGD),orient='index', columns=['Score'])
         df= df.append(df2)
         print('Accuracy Scores')
         print(df)
@@ -467,7 +467,7 @@ class Email_Classifictaion:
         pred_vote.append((k2, [accuracy_score(labels_test,pred_2)]))
         pred_vote.append((k3, [accuracy_score(labels_test,pred_3)]))
         
-        df3 = pd.DataFrame.from_items(pred_vote,orient='index', columns=['Score'])
+        df3 = pd.DataFrame.from_dict(dict(pred_vote),orient='index', columns=['Score'])
         df= df.append(df3)
         print('Accuracy Scores')
         print(df)
@@ -514,7 +514,7 @@ class Email_Classification_Stemming:
             pred = email_class_obj.predict_labels(v,features_test)
             pred_scores.append((k, [accuracy_score(labels_test,pred)]))
             
-        df4 = pd.DataFrame.from_items(pred_scores,orient='index', columns=['Score2'])
+        df4 = pd.DataFrame.from_dict(dict(pred_scores),orient='index', columns=['Score2'])
         print('Accuracy Scores of classifiers')
         print(df4)
         print('----------------------------------------------------------------')
@@ -543,7 +543,7 @@ class Email_Classification_Stemming:
         pred_SGD=[]
         pred_SGD.append((k1,[accuracy_score(labels_test,pred1)]))
         pred_SGD.append((k2,[accuracy_score(labels_test,pred2)]))
-        df5 = pd.DataFrame.from_items(pred_SGD,orient='index', columns=['Score2'])
+        df5 = pd.DataFrame.from_dict(dict(pred_SGD),orient='index', columns=['Score2'])
         df4= df4.append(df5)
         print('Accuracy Scores')
         print(df4)
@@ -590,7 +590,7 @@ class Email_Classification_Stemming:
         pred_vote.append((k2, [accuracy_score(labels_test,pred_2)]))
         pred_vote.append((k3, [accuracy_score(labels_test,pred_3)]))
         
-        df6 = pd.DataFrame.from_items(pred_vote,orient='index', columns=['Score2'])
+        df6 = pd.DataFrame.from_dict(dict(pred_vote),orient='index', columns=['Score2'])
         df4= df4.append(df6)
         print(df4)
         print('Accuracy Scores')
@@ -613,7 +613,7 @@ class Length_Matrix:
         email_class_obj= Email_Classifictaion()
         
         print('Without Stemming')
-        lf = emails['Length'].as_matrix()
+        lf = emails['Length'].to_numpy()
         newfeat = np.hstack((features.todense(),lf[:, None]))
         
         print('Splitting features into train and test set')
@@ -626,7 +626,7 @@ class Length_Matrix:
             pred = email_class_obj.predict_labels(v,features_test)
             pred_scores.append((k, [accuracy_score(labels_test,pred)]))
             
-        df7 = pd.DataFrame.from_items(pred_scores,orient='index', columns=['Score3'])
+        df7 = pd.DataFrame.from_dict(dict(pred_scores),orient='index', columns=['Score3'])
         print(df7)
         
         print('Building a SVM classifier with Stochastic Gradient Descent learning')
@@ -646,7 +646,7 @@ class Length_Matrix:
         pred_SGD=[]
         pred_SGD.append((k1,[accuracy_score(labels_test,pred1)]))
         pred_SGD.append((k2,[accuracy_score(labels_test,pred2)]))
-        df8 = pd.DataFrame.from_items(pred_SGD,orient='index', columns=['Score3'])
+        df8 = pd.DataFrame.from_dict(dict(pred_SGD),orient='index', columns=['Score3'])
         df7= df7.append(df8)
         print('Accuracy Scores')
         print(df7)
@@ -682,7 +682,7 @@ class Length_Matrix:
         pred_vote_l1.append((k2, [accuracy_score(labels_test,pred_2)]))
         pred_vote_l1.append((k3, [accuracy_score(labels_test,pred_3)]))
         
-        df9 = pd.DataFrame.from_items(pred_vote_l1,orient='index', columns=['Score3'])
+        df9 = pd.DataFrame.from_dict(dict(pred_vote_l1),orient='index', columns=['Score3'])
         df7= df7.append(df9)
         print(df7)
         df = pd.concat([df,df7],axis=1)
@@ -697,7 +697,7 @@ class Length_Matrix:
         email_class_obj= Email_Classifictaion()
         
         print('With Stemming')
-        lf = emails['Length'].as_matrix()
+        lf = emails['Length'].to_numpy()
         newfeat_stem = np.hstack((features_stem.todense(),lf[:, None]))
         
         print('Split the features into train and test set')
@@ -710,7 +710,7 @@ class Length_Matrix:
             pred = email_class_obj.predict_labels(v,features_test)
             pred_scores.append((k, [accuracy_score(labels_test,pred)]))
             
-        df10 = pd.DataFrame.from_items(pred_scores,orient='index', columns=['Score4'])
+        df10 = pd.DataFrame.from_dict(dict(pred_scores),orient='index', columns=['Score4'])
         print(df10)
         
         print('Building a SVM classifier with Stochastic Gradient Descent learning')
@@ -730,7 +730,7 @@ class Length_Matrix:
         pred_SGD=[]
         pred_SGD.append((k1,[accuracy_score(labels_test,pred1)]))
         pred_SGD.append((k2,[accuracy_score(labels_test,pred2)]))
-        df11 = pd.DataFrame.from_items(pred_SGD,orient='index', columns=['Score4'])
+        df11 = pd.DataFrame.from_dict(dict(pred_SGD),orient='index', columns=['Score4'])
         df10= df10.append(df11)
         print('Accuracy Scores')
         print(df10)
@@ -767,7 +767,7 @@ class Length_Matrix:
         pred_vote_l2.append((k2, [accuracy_score(labels_test,pred_2)]))
         pred_vote_l2.append((k3, [accuracy_score(labels_test,pred_3)]))
         
-        df12 = pd.DataFrame.from_items(pred_vote_l2,orient='index', columns=['Score4'])
+        df12 = pd.DataFrame.from_dict(dict(pred_vote_l2),orient='index', columns=['Score4'])
         df10= df10.append(df12)
         print(df10)
         df = pd.concat([df,df10],axis=1)
