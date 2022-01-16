@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon May 14 17:13:34 2018
-
-@author: Simar
-"""
-
 '''Importing libraries'''
 import pandas as pd
 import string
@@ -29,6 +22,7 @@ from sklearn.ensemble import VotingClassifier
 import seaborn as sns
 from matplotlib import rcParams
 import warnings
+import pickle
 warnings.filterwarnings('ignore')
 
 class Data_Preprocessing:
@@ -383,6 +377,26 @@ class Email_Classifictaion:
         print('\n')
         
         svc.fit(features_train, labels_train)
+        knc.fit(features_train, labels_train)
+        mnb.fit(features_train, labels_train)
+        dtc.fit(features_train, labels_train)
+        lrc.fit(features_train, labels_train)
+        rfc.fit(features_train, labels_train)
+        abc.fit(features_train, labels_train)
+        bc.fit(features_train, labels_train)
+        etc.fit(features_train, labels_train)
+
+        # save model
+        pickle.dump(svc, open("model/svc.pkl", "wb"))
+        pickle.dump(knc, open("model/knc.pkl", "wb"))
+        pickle.dump(mnb, open("model/mnb.pkl", "wb"))
+        pickle.dump(dtc, open("model/dtc.pkl", "wb"))
+        pickle.dump(lrc, open("model/lrc.pkl", "wb"))
+        pickle.dump(rfc, open("model/rfc.pkl", "wb"))
+        pickle.dump(abc, open("model/abc.pkl", "wb"))
+        pickle.dump(bc, open("model/bc.pkl", "wb"))
+        pickle.dump(etc, open("model/etc.pkl", "wb"))
+
         pred= svc.predict(features_test)
         print('Classifictaion Report of SVC')
         self.class_report(pred)
